@@ -1,0 +1,37 @@
+    <div class="span2">
+        <a class="btn" data-action="show_item_details"><i class="icon-zoom-in"></i></a>
+    </div>
+    <div class="span2">
+<%
+    var is_done = Boolean(model.get("completion_time"));
+    var due_time = model.get("due_time");
+    var name = model.get("name");
+    if (due_time){
+%>
+    <%= due_time %>
+<%
+    }else{
+%>
+    No due time set
+<%
+    }
+%>
+    </div>
+    <div class="span6">
+        <%= name %>
+    </div>
+    <div class="span2 btn-group">
+<%
+    if (is_done){
+%>
+    <a class="btn btn-danger mark_undone" data-action="mark_undone"><i class="icon-check icon-white"></i></a>
+    <a class="btn btn-danger delete_todo" data-action="remove_item"><i class="icon-trash icon-white"></i></a>
+<%
+    }else{
+%>
+    <a class="btn btn-success mark_done" data-action="mark_done"><i class="icon-check icon-white"></i></a>
+    <a class="btn btn-danger delete_todo" data-action="remove_item"><i class="icon-trash icon-white"></i></a>
+<%
+    }
+%>
+    </div>

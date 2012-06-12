@@ -1,0 +1,15 @@
+<%  
+    var date, time, id;
+    date = time = id = '';
+    if (model){
+        alert_time = model.get("time");
+        var date = alert_time.split(" ")[0];
+        var time = alert_time.split(" ")[1];
+        id = model.get("id");
+    }
+%>
+    <div class="input-append">
+        <input style="display:inline;" class="span4" type="text" name="due_time_date" id="id_time_date" value="<%=date%>">
+        <input style="display:inline;" class="span4" type="text" name="due_time_time" id="id_time_time" value="<%=time%>"><button class="btn-success" type="button" data-action="save_item" rel="tooltip" title="save alert"><i class="<% if (id){%>icon-ok<%}else{%>icon-plus<%}%> icon-white"></i></button><button class="btn-danger" type="button" data-action="remove_item" rel="tooltip" title="remove alert"><i class="icon-remove icon-white"></i></button>
+        <span class="help-inline"></span>
+    </div>

@@ -1,0 +1,12 @@
+<%  
+    var name, id;
+    name = id = '';
+    if (model){
+        name = model.get("name");
+        id = model.get("id");
+    }
+%>
+    <div class="input-append" data-todo-list-id="<%=id%>">
+        <input type="text" value="<%=name%>"><button class="btn-success" type="button" data-action="save_item"><% if (id){%>Change<%}else{%>Save<%}%></button><button class="btn-danger" type="button" data-action="remove_item">Remove</button>
+        <span class="help-inline"></span>
+    </div>

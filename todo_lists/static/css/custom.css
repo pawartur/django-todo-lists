@@ -1,0 +1,63 @@
+#manage-todo-contexts-form .control-label {
+    width: 60px;
+}
+
+#manage-todo-contexts-form .controls {
+    margin-left: 80px;
+}
+
+.todo-item {
+    padding: 5px 2px 5px 2px;
+}
+
+.todo-item.priority-high{
+    background-color: #f4e364;
+}
+
+.todo-item.priority-normal{
+    background-color: #4aaff7;
+}
+
+.todo-item.priority-low{
+    background-color: #5add6a;
+}
+
+.todo-details {
+    padding: 5px 2px 5px 2px;
+    width: 99.6%;
+}
+
+.todo-details.priority-high{
+    border: solid 2px #f4e364;
+}
+
+.todo-details.priority-normal{
+    border: solid 2px #4aaff7;
+}
+
+.todo-details.priority-low{
+    border: solid 2px #5add6a;
+}
+
+.todo-details .dl-horizontal dt {
+    width: 60px;
+    margin-bottom: 18px;
+}
+
+.todo-details .dl-horizontal dd {
+    margin-left: 80px;
+    margin-bottom: 18px;
+}
+
+.todo-details label {
+    font-weight: bold;
+}
+
+dl {
+    margin: 0;
+}
+
+#manage-todo-lists-modal .modal-body,
+#manage-todo-contexts-modal .modal-body{
+    padding-left: 90px;
+}

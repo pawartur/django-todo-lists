@@ -1,0 +1,139 @@
+<div  class="btn-group">
+    <a data-action="show_add_object_modal" id="show-add-object-modal" class="btn btn-primary"><i class="icon-plus icon-white"></i></a>
+</div>
+
+<div class="modal fade" id="add-todo-modal" style="display:none;">
+    <form method="POST" id="add-todo-form" class="form-horizontal">
+        <div class="modal-header">
+            <button class="close" data-dismiss="modal">×</button>
+                <h3>Add a Todo</h3>
+        </div>
+        <div class="modal-body">
+            <div class="control-group">
+                <label class="control-label" for="id_name">Name:</label>
+                <div class="controls">
+                    <input id="id_name" type="text" name="name"/>
+                    <span class="errors-info errors_name help-inline"></span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="id_notes">Notes:</label>
+                <div class="controls">
+                    <textarea id="id_notes" name="notes"></textarea>
+                    <span class="errors-info errors_notes help-block"></span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="id_tags">Tags:</label>
+                <div class="controls">
+                <% if (filters.tags && todo_tags.get(filters.tags)){ 
+                    var selected_todo_tag = todo_tags.get(filters.tags);
+                    var name = selected_todo_tag.get("name");
+                %>
+                    <%=name%>, 
+                    <input type="hidden" value="<%=name%>" name="predefined_todo_tag" id="id_predefined_todo_tag">
+                <% } 
+                %>
+                    <input type="text" name="tags" id="id_tags" />
+                    <span class="errors-info errors_tags help-inline"></span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="id_due_time_date">Due date and time:</label>
+                <div class="controls">
+                    <input style="display:inline;" class="span5" type="text" name="due_time_date" id="id_due_time_date">
+                    <input style="display:inline;" class="span3" type="text" name="due_time_time" id="id_due_time_time">
+                    <span class="errors-info errors_due_time help-inline"></span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="id_priority">Priority:</label>
+                <div class="controls">
+                <% if (filters.priority){ 
+                    var name;
+                    if (filters.priority == 1){
+                        name = "Low";
+                    }else if(filters.priority == 2){
+                        name = "Normal";
+                    }else{
+                        name = "High";
+                    }
+                %>
+                    <%=name%>
+                    <input type="hidden" value="<%=filters.priority%>" name="priority" id="id_priority">
+                <% }else{ 
+                %>
+                    <select name="priority" id="id_priority">
+                        <option value="1">Low</option>
+                        <option value="2" selected="selected">Normal</option>
+                        <option value="3">High</option>
+                    </select>
+                <% } %>
+                    <span class="errors-info errors_priority help-inline"></span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="id_todo_list">List:</label>
+                <div class="controls">
+                <% if (filters.todo_list && todo_lists.get(filters.todo_list)){ 
+                    var selected_todo_list = todo_lists.get(filters.todo_list);
+                    var name = selected_todo_list.get("name");
+                    var id = selected_todo_list.get("id");
+                %>
+                    <%=name%>
+                    <input type="hidden" value="<%=id%>" name="todo_list" id="id_todo_list">
+                <% }else{ 
+                %>
+                    <select name="todo_list" id="id_todo_list">
+                        <%
+                            _.each(todo_lists.models, function(todo_list){
+                                var id = todo_list.get("id");
+                                var name = todo_list.get("name");
+                        %>
+                            <option value="<%=id%>"><%= name %></option>
+                        <%
+                            });
+                        %>
+                    </select>
+                <% } %>
+                    <span class="errors-info errors_todo_list help-inline"></span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="id_todo_context">Context:</label>
+                <div class="controls"> 
+                <% if (filters.todo_context && todo_contexts.get(filters.todo_context)){ 
+                    var selected_todo_context = todo_contexts.get(filters.todo_context);
+                    var name = selected_todo_context.get("name");
+                    var id = selected_todo_context.get("id");
+                %>
+                    <%=name%>
+                    <input type="hidden" value="<%=id%>" name="todo_context" id="id_todo_context">
+                <% }else{ 
+                %>
+                    <select name="todo_context" id="id_todo_context">
+                        <option  value=''>---------------------------</option>
+                        <%
+                            _.each(todo_contexts.models, function(todo_context){
+                                var id = todo_context.get("id");
+                                var name = todo_context.get("name");
+                        %>
+                            <option value="<%=id%>"><%= name %></option>
+                        <%
+                            });
+                        %>
+                    </select>
+                <% } %>
+                    <span class="errors-info errors_todo_context help-inline"></span>
+                </div>
+            </div>
+        
+        </div>
+        <div class="modal-footer">
+            <a href="#" data-dismiss="modal" class="btn">Cancel</a>
+            <a data-action="add_object" data-next="add" href="#" class="btn btn-primary add-todo-button">Save and add another</a>
+            or 
+            <a data-action="add_object" data-next="hide" href="#" class="btn btn-success add-todo-button">Save and close</a>
+        </div>
+    </form>
+</div>
