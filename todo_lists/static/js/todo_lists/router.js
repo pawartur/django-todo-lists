@@ -2,7 +2,7 @@
  * django-todo-lists
  * http://www.github.com/pawartur/django-todo-lists
  * =========================================================
- * Copyright (c) 2012, Artur Wdowiarski
+ * Copyright (c) 21012, Artur Wdowiarski
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without 
@@ -27,41 +27,23 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS 
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * ========================================================= */
-
-define([
-    'jQuery',
-    'Underscore',
-    'Backbone',
-    'models/todo',
-    'text!templates/todos/list_item.html'
-], function($, _, Backbone, toDoModel, toDoListItemTemplate){
-    var toDoListItemView = Backbone.ListItemView.extend({
-        template: toDoListItemTemplate,
-        item_model: toDoModel,
-        events: _.extend({
-            "click a[data-action='mark_done']": "toggle_done",
-            "click a[data-action='mark_undone']": "toggle_done"
-        }, Backbone.ListItemView.prototype.events),
-        initialize: function(){
-            _.bindAll(
-                this,
-                'toggle_done'
-            );
-            Backbone.ListItemView.prototype.initialize.call(this);
+ 
+(function(Backbone, ToDoLists){
+    var AppRouter = Backbone.Router.extend({
+        routes: {
+          // Default
+          '*actions': 'showToDoList'
         },
-        toggle_done: function(evt){
-            evt.preventDefault();
-            var is_done = this.model.get("completion_time") ? "False" : "True";
-            this.model.save({is_done: is_done}, {wait: true});
-        },
-        render: function(options){
-            Backbone.ListItemView.prototype.render.apply(this, arguments);
-            this.$el.removeClass(function() {
-                return $(this).attr("class").split(" ").filter(function(el, index){ return el.indexOf("priority") == 0 }).join(" ");
-            });
-            var priority = this.model.get("priority");
-            this.$el.addClass('priority-' + priority[1].toLowerCase());
-        },
+        showToDoList: function(actions){
+          manager_view = new ToDoLists.views.markItDoneManagerView();
+          manager_view.render();
+        }
     });
-    return toDoListItemView;
-});
+
+    ToDoLists.router.initialize = function(){
+        var app_router = new AppRouter;
+        Backbone.history.start();
+    };
+})(Backbone, ToDoLists);
+
+

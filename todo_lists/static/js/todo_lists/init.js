@@ -2,7 +2,7 @@
  * django-todo-lists
  * http://www.github.com/pawartur/django-todo-lists
  * =========================================================
- * Copyright (c) 2012, Artur Wdowiarski
+ * Copyright (c) 21012, Artur Wdowiarski
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without 
@@ -28,17 +28,12 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * ========================================================= */
 
-define([
-    'jQuery',
-    'Underscore',
-    'Backbone',
-    'views/todo_lists/manager_modal',
-    'text!templates/todo_lists/manager_modal_handler.html',
-], function($, _, Backbone, toDoListManagerModalView, toDoListManagerModalHandlerTemplate){
-    var toDoListManagerModalHandlerView = Backbone.ManagerModalHandlerView.extend({
-        template: toDoListManagerModalHandlerTemplate,
-        modal: toDoListManagerModalView,
-        modal_placeholder: $('<div id="todo-lists-manager-modal-placeholder"></div>')
-    });
-    return toDoListManagerModalHandlerView;
-});
+(function(){
+    ToDoLists = {
+        models: {},
+        templates: {},
+        views: {},
+        router: {},
+        app: {}
+    };
+})();

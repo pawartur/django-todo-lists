@@ -12,19 +12,7 @@ setup(
     long_description=open('README.txt').read(),
     package_data = {
         'todo_lists': [
-            'static/js/*.js',
-            'static/js/collections/*.js',
-            'static/js/models/*.js',
-            'static/js/views/*.js',
-            'static/js/views/todo_alerts/*.js',
-            'static/js/views/todo_contexts/*.js',
-            'static/js/views/todo_lists/*.js',
-            'static/js/views/todos/*.js',
-            'static/js/templates/*.html',
-            'static/js/templates/todo_alerts/*.html',
-            'static/js/templates/todo_contexts/*.html',
-            'static/js/templates/todo_lists/*.html',
-            'static/js/templates/todos/*.html',
+            'static/js/todo_lists/*.js',
             'static/css/*.css',
         ]
     },

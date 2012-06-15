@@ -2,7 +2,7 @@
  * django-todo-lists
  * http://www.github.com/pawartur/django-todo-lists
  * =========================================================
- * Copyright (c) 2012, Artur Wdowiarski
+ * Copyright (c) 21012, Artur Wdowiarski
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without 
@@ -28,12 +28,38 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * ========================================================= */
 
-define([
-    'jQuery',
-    'Underscore',
-    'Backbone',
-    'models/todo'
-], function($, _, Backbone, toDoModel){
+(function(Backbone, ToDoLists){
+    var toDoModel = Backbone.ExtendedModel.extend({
+        urlRoot: 'todos/',
+        parse: function(response){
+            var attributes = response.object;
+            return attributes;
+        }
+    });
+
+    var toDoListModel = Backbone.ExtendedModel.extend({
+        urlRoot: 'todos/lists/'
+    });
+
+    var toDoContextModel = Backbone.ExtendedModel.extend({
+        urlRoot: 'todos/contexts/'
+    });
+
+    var toDoAlertModel = Backbone.ExtendedModel.extend({
+        initialize: function(){
+            Backbone.ExtendedModel.prototype.initialize.call(this);
+            this.todo = this.get("todo");
+            this.unset("todo");
+        },
+        urlRoot: function(){
+            return 'todos/' + this.get("todo_id") + '/alerts/';
+        }
+    });
+
+    var toDoTagModel = Backbone.ExtendedModel.extend({
+        urlRoot: 'todos/tags/'
+    });
+
     var toDoCollection = Backbone.ExtendedCollection.extend({
         name: "toDoCollection",
         model: toDoModel,
@@ -102,5 +128,42 @@ define([
             localStorage.setItem(this.name+"Filters", JSON.stringify(this.filters));
         }
     });
-    return toDoCollection;
-});
+
+    var toDoListCollection = Backbone.ExtendedCollection.extend({
+        model: toDoListModel,
+        url: '/todos/lists/'
+    });
+
+    var toDoContextCollection = Backbone.ExtendedCollection.extend({
+        model: toDoContextModel,
+        url: '/todos/contexts/'
+    });
+
+    toDoAlertCollection = Backbone.ExtendedCollection.extend({
+        model: toDoAlertModel,
+        initialize: function(models, options){
+            Backbone.ExtendedCollection.prototype.initialize.apply(this, arguments);
+            this.parent_todo = options.parent_todo;
+        },
+        url: function(){
+            return "/" + this.parent_todo.get("id") + "/todos/alerts/";
+        }       
+    });
+
+    toDoTagCollection = Backbone.ExtendedCollection.extend({
+        model: toDoTagModel,
+        url: '/todos/contexts/'
+    });
+
+    ToDoLists.models.toDoModel = toDoModel;
+    ToDoLists.models.toDoListModel = toDoListModel;
+    ToDoLists.models.toDoContextModel = toDoContextModel;
+    ToDoLists.models.toDoAlertModel = toDoAlertModel;
+    ToDoLists.models.toDoTagModel = toDoTagModel;
+
+    ToDoLists.models.toDoCollection = toDoCollection;
+    ToDoLists.models.toDoListCollection = toDoListCollection;
+    ToDoLists.models.toDoContextCollection = toDoContextCollection;
+    ToDoLists.models.toDoAlertCollection = toDoAlertCollection;
+    ToDoLists.models.toDoTagCollection = toDoTagCollection;
+})(Backbone, ToDoLists);

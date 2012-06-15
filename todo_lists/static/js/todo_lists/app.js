@@ -2,7 +2,7 @@
  * django-todo-lists
  * http://www.github.com/pawartur/django-todo-lists
  * =========================================================
- * Copyright (c) 2012, Artur Wdowiarski
+ * Copyright (c) 21012, Artur Wdowiarski
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without 
@@ -28,29 +28,45 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * ========================================================= */
 
-define([
-    'jQuery',
-    'Underscore',
-    'Backbone',
-    'views/filter_item',
-    'views/todo_contexts/manager_modal_handler',
-    'text!templates/todos/context_filter.html'
-], function($, _, Backbone, filterItemView, toDoContextManagerModalHandlerView, toDoContextFilterTemplate){
-    var toDoContextFilterView = Backbone.FilterView.extend({
-        item_view: filterItemView,
-        template: toDoContextFilterTemplate,
-        filter_by: 'todo_context',
-        render: function(){
-            Backbone.FilterView.prototype.render.call(this);
+(function(Backbone, ToDoLists){
+    var fix_ajax_queries_to_django = function(){
+        $(document).ajaxSend(function(event, xhr, settings) {
 
-            var manager_options = {
-                el: this.$(".todo-context-manager-placeholder"),
-                collection: this.collection
+            function sameOrigin(url) {
+                // url could be relative or scheme relative or absolute
+                var host = document.location.host; // host + port
+                var protocol = document.location.protocol;
+                var sr_origin = '//' + host;
+                var origin = protocol + sr_origin;
+                // Allow absolute or scheme relative URLs to same origin
+                return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
+                        (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+                        // or any other URL that isn't scheme relative or absolute i.e relative.
+                        !(/^(\/\/|http:|https:).*/.test(url));
             }
-            this.todo_contexts_manager_view = new toDoContextManagerModalHandlerView(manager_options);
-            this.todo_contexts_manager_view.render();
-            return this;
-        }
-    });
-    return toDoContextFilterView;
-});
+            
+            function safeMethod(method) {
+                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+            }
+
+            if (!safeMethod(settings.type) && sameOrigin(settings.url)) {
+                xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));
+            }
+        });
+    }
+
+    var handle_global_spinner = function(){
+        var self = this;
+        $("body").bind("ajaxSend", function(){
+            self.spinner = $(this).spin();
+        }).bind("ajaxComplete", function(){
+            self.spinner.data("spinner").stop();
+        });
+    }
+
+    ToDoLists.app.initialize = function(){
+        fix_ajax_queries_to_django();
+        handle_global_spinner();
+        ToDoLists.router.initialize();
+    }
+})(Backbone, ToDoLists);
