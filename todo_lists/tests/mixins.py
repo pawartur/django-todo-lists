@@ -43,7 +43,7 @@ class ToDoViewsTestCaseMixin(object):
         return json.loads(response.content)
 
     def assertAjaxLoginRequired(self, url):
-        response = Client().get(url)
+        response = Client().get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         parsed_content = self.get_parsed_json_respone(response)
         try:
             self.assertEqual(parsed_content.get("message"), "Login required")

@@ -4,7 +4,7 @@ from todo_lists.models import ToDo
 from todo_lists.forms import ToDoForm
 from todo_lists.views.base import UserResourceViewMixin
 from todo_lists.filters import ToDoFilterSet
-from todo_lists.views.decorators import login_required_ajax
+from rest_views.decorators import login_required_ajax
 
 
 class ToDoJSONView(UserResourceViewMixin, JSONRestView):

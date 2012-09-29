@@ -98,7 +98,7 @@ class ToDo(UserResource):
 
     @property
     def dict_repr(self):
-        d = {f.name: getattr(self, f.name) or "" for f in self._meta.fields}
+        d = {f.name: getattr(self, f.name) or None for f in self._meta.fields}
         d.pop("owner")
         d.update({
             "priority": (self.priority, self.get_priority_display()),

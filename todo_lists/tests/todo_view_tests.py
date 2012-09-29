@@ -33,7 +33,7 @@ class ToDoViewsTestCase(ToDoViewsTestCaseMixin, TestCase):
         parsed_content = self.get_parsed_json_respone(response)
         self.assertDictEqual(parsed_content, {
             u'object': {
-                u'completion_time': u'',
+                u'completion_time': None,
                 u'creation_time': localtime(todo.creation_time).strftime('%Y-%m-%d %H:%M'), # receiving localized times from server
                 u'due_time': localtime(todo.due_time).strftime('%Y-%m-%d %H:%M'),
                 u'id': todo.pk,
@@ -43,7 +43,7 @@ class ToDoViewsTestCase(ToDoViewsTestCaseMixin, TestCase):
                 u'tags': [],
                 u'todo_alerts': [],
                 u'priority': [2, u'Normal'],
-                u'todo_context': u'',
+                u'todo_context': None,
                 u'todo_list': todo.todo_list.dict_repr
             }
         })

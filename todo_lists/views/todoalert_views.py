@@ -5,7 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from todo_lists.models import ToDoAlert
 from todo_lists.forms import ToDo, ToDoAlertForm
 from todo_lists.views.base import UserResourceViewMixin
-from todo_lists.views.decorators import login_required_ajax
+from rest_views.decorators import login_required_ajax
  
 
 class ToDoAlertJSONView(UserResourceViewMixin, JSONRestView):

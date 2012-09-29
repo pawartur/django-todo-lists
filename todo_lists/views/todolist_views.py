@@ -3,7 +3,7 @@ from rest_views.views import JSONRestView
 from todo_lists.models import ToDoList
 from todo_lists.forms import ToDoListForm
 from todo_lists.views.base import UserResourceViewMixin
-from todo_lists.views.decorators import login_required_ajax
+from rest_views.decorators import login_required_ajax
 
 
 class ToDoListJSONView(UserResourceViewMixin, JSONRestView):
