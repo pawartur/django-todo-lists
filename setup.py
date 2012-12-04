@@ -9,7 +9,7 @@ setup(
     url='http://github.com/pawartur/django-todo-lists/tree/master',
     license='LICENSE.txt',
     description="Simple django todo app with frontend based on Bootstrap and Backbone.js.",
-    long_description=open('README.txt').read(),
+    long_description=open('README.md').read(),
     package_data = {
         'todo_lists': [
             'static/js/todo_lists/*.js',
